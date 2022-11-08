@@ -3,18 +3,31 @@
 on:
   workflow_dispatch:
     inputs:
-      CONFIGURATION:
-        description: '構成の選択'
+      APP_NAME:
+        description: 'アプリ名'
         required: true
-        default: Debug
+        type: string
+      BUILD_NUMBER:
+        description: 'ビルド番号'
+        required: true
+        type: number
+      DEVELOPMENT_BUILD:
+        description: '開発版'
+        type: boolean
+      TARGET:
+        description: 'ターゲット'
+        required: true
+        default: Sandbox
         type: choice
         options:
-        - Debug
-        - Release
+        - Development
+        - Sandbox
+        - Production
 
 jobs:
   Build:
     runs-on: ubuntu-latest
+    if: ${{ inputs.DEVELOPMENT_BUILD }}
     steps:
       - run: |
-          echo ${{ inputs.CONFIGURATION }}
+        echo AppName: ${{ inputs.APP_NAME }} Build Number: ${{ inputs.BUILD_NUMBER}} Target: ${{ inputs.TARGET }}
