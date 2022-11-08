@@ -2,11 +2,19 @@
 
 on:
   workflow_dispatch:
+    inputs:
+      CONFIGURATION:
+        description: '構成の選択'
+        required: true
+        default: Debug
+        type: choice
+        options:
+        - Debug
+        - Release
 
 jobs:
   Build:
-    runs-on: macos-latest
-
+    runs-on: ubuntu-latest
     steps:
       - run: |
-          echo github='${{ toJSON(github) }}'
+        echo ${{ inputs.CONFIGURATION }}
